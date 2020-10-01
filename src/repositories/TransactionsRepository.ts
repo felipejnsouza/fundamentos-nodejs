@@ -24,9 +24,26 @@ class TransactionsRepository {
   }
 
   public getBalance(): Balance {
-    // to do
+    const reducerTransactions = ()=>{}
+    const balance = this.transactions.reduce((acc, obj)=>{
+      if( obj.type == 'income') {
+        acc.income += obj.value
+      }else{
+        acc.outcome += obj.value
+      };
 
+      acc.total = acc.income - acc.outcome;
+
+      return acc;
+    }, {
+      income: 0,
+      outcome: 0,
+      total: 0
+    });
+
+    return balance;
   }
+
 
   public create({title, value, type}: CreateTransactionDTO): Transaction {
     const transaction = new Transaction({title, value, type})
